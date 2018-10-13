@@ -1,7 +1,7 @@
 #include <SoftwareSerial9.h>
 
 #define IN1 35 //Uzkurimo rele
-#define IN2 9 //Gyvybes palaikymo rele
+//#define IN2 9 //laisvas...
 #define TX_blade 8
 #define RX_blade 10
 #define TX_L 5 //MOSI Left wheel
@@ -39,8 +39,6 @@ void setup() {
 
   pinMode(IN1, OUTPUT);
   digitalWrite(IN1, LOW);
-  pinMode(IN2, OUTPUT);
-  digitalWrite(IN2, LOW);
 
   pinMode(GND1, OUTPUT);
   pinMode(GND2, OUTPUT);
@@ -139,7 +137,6 @@ void goWheel(int sp_L, int sp_R, int onHoverboard) {
 void PowerON() {
    powerOn = true;
    Serial.println("Ijungiama elektros grandine ir paleidziama motinine");
-   digitalWrite(IN2, HIGH);
    delay(300);
    digitalWrite(IN1, HIGH);
    delay(1000);
@@ -152,7 +149,9 @@ void PowerON() {
 void PowerOFF() {
    powerOn = false;
    Serial.println("Nutraukiama energijos grandine");
-   digitalWrite(IN2, LOW);
+   digitalWrite(IN1, HIGH);
+   delay(1000);
+   digitalWrite(IN1, LOW);
    delay(2000);
 }
 */
