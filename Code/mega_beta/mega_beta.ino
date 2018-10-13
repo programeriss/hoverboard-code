@@ -2,8 +2,8 @@
 
 #define IN1 35 //Uzkurimo rele
 //#define IN2 9 //laisvas...
-#define TX_blade 8
-#define RX_blade 10
+#define TX_blade 8 //MOSI Blade
+#define RX_blade 10 //MISO Blade
 #define TX_L 5 //MOSI Left wheel
 #define RX_L 4 //MISO Left wheel
 #define TX_R 3 //MOSI Right Wheel
