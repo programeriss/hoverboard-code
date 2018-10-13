@@ -148,9 +148,11 @@ void PowerON() {
 }
 
 //Energija OFF i motinine
+/*
 void PowerOFF() {
    powerOn = false;
-   //Serial.println("Nutraukiama energijos grandine");
+   Serial.println("Nutraukiama energijos grandine");
    digitalWrite(IN2, LOW);
    delay(2000);
 }
+*/
