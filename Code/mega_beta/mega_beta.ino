@@ -1,6 +1,6 @@
 #include <SoftwareSerial9.h>
 
-#define IN1 35 //Uzkurimo rele //Pernesti i digital???
+#define IN1 35 //Uzkurimo rele
 #define IN2 9 //Gyvybes palaikymo rele
 #define TX_blade 8
 #define RX_blade 10
