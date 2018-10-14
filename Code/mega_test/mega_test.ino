@@ -2,12 +2,15 @@
 
 #define IN1 33 //Uzkurimo rele
 //#define IN2 9 //laisvas...
+//#define IN2 10 //laisvas...
+//#define IN2 11 //laisvas...
+//#define IN2 12 //laisvas...
 #define TX_blade 8 //MOSI Blade
-#define RX_blade 10 //MISO Blade
+#define RX_blade 39 //MISO Blade
 #define TX_L 5 //MOSI Left wheel
-#define RX_L 4 //MISO Left wheel
+#define RX_L 37 //MISO Left wheel
 #define TX_R 3 //MOSI Right Wheel
-#define RX_R 2 //MISO Right Wheel
+#define RX_R 31 //MISO Right Wheel
 #define GND1 22
 #define GND2 24
 #define GND3 26
@@ -18,9 +21,6 @@
 #define GND8 36
 #define GND9 38
 #define GND10 40
-#define VCC1 31
-#define VCC4 37
-#define VCC5 39
 #define VCC6 41
 #define LEDPIN 13
 
@@ -29,6 +29,8 @@ SoftwareSerial9 mySerial_wheel_R(RX_R,TX_R);
 SoftwareSerial9 mySerial_blade(RX_blade,TX_blade);
 
 bool powerOn = false;
+int x = 0;
+int sp = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -59,13 +61,7 @@ void setup() {
   digitalWrite(GND8, LOW);
   digitalWrite(GND9, LOW);
   digitalWrite(GND10, LOW);
-  pinMode(VCC1, OUTPUT);
-  pinMode(VCC4, OUTPUT);
-  pinMode(VCC5, OUTPUT);
   pinMode(VCC6, OUTPUT);
-  digitalWrite(VCC1, HIGH);
-  digitalWrite(VCC4, HIGH);
-  digitalWrite(VCC5, HIGH);
   digitalWrite(VCC6, HIGH);
 }
 
@@ -75,11 +71,22 @@ void loop() {
     PowerON();
   }
 
+  //test
+  x++;
+  if (x > 145) {
+    x = 0;
+  }
+  if (x > 75) {
+    sp = 250;
+  }else{
+    sp = 150;
+  }
+
   //Go blade
-  goBlade(150, 85);
+  goBlade(sp, 85);
   
   //Go wheel
-  goWheel(150, 150, 85);
+  goWheel(sp, sp, 85);
 }
 
 //Suktis bleidui komandos siuntimas!
@@ -140,7 +147,7 @@ void PowerON() {
     int sp = 0;
     int onHoverboard = 170;
   
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 14; i++) {
       goBlade(sp, onHoverboard);
     }
    digitalWrite(IN1, LOW);
