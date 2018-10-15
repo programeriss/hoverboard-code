@@ -76,17 +76,8 @@ void setup() {
 void loop() {
 
   controller();
-
-  if (powerOn == false && ch10 == true) {
-    PowerON();
-  }
-  if (powerOn == true && ch10 == false) {
-    PowerOFF();
-  }
-
   if (ch10) {
     //Go blade
-    goBlade(0, 170);
     if (ch11 == 0) {
       goBlade(0, 170);
     }else{
@@ -95,26 +86,35 @@ void loop() {
     }
     
     //Go wheel
+    bool nieko = true;
     if (ch12 > 30 && pav == 0) {
       pav = 1;
       goWheel(400, -400, 85);
-    } else if (ch12 < -30 && pav == 0) {
+      nieko = false;
+    }
+    
+    if (ch12 < -20 && pav == 0) {
       pav = 1;
       goWheel(-400, 400, 85);
+      nieko = false;
     }
 
     if (ch9 > 20 && pav == 0) {
       pav = 1;
       goWheel(5, -450, 85);
+      nieko = false;
     }
 
     if (ch9 < -20 && pav == 0) {
       pav = 1;
       goWheel(450, -5, 85);
+      nieko = false;
     }
-    
-    if (ch12 == 0 || pav == 1) {
+    if (ch12 == 0 && ch9 == 0 && pav == 1) {
       pav = 0;
+    }
+
+    if (nieko) {
       goWheel(0, 0, 85);
     }
   }else{
@@ -171,35 +171,6 @@ void goWheel(int sp_L, int sp_R, int onHoverboard) {
     Serial.println(onHoverboard);
 }
 
-//Energija ON i motinine
-void PowerON() {
-   powerOn = true;
-   Serial.println("Ijungiama elektros grandine ir paleidziama motinine");
-   delay(300);
-   digitalWrite(IN1, HIGH);
-
-    int sp = 0;
-    int onHoverboard = 170;
-  
-    for (int i = 0; i < 17; i++) {
-      goBlade(sp, onHoverboard);
-    }
-   digitalWrite(IN1, LOW);
-    for (int i = 0; i < 5; i++) {
-      goBlade(sp, onHoverboard);
-    }
-}
-
-//Energija OFF i motinine
-void PowerOFF() {
-   powerOn = false;
-   Serial.println("Nutraukiama energijos grandine");
-   digitalWrite(IN1, HIGH);
-   delay(500);
-   digitalWrite(IN1, LOW);
-   delay(2000);
-}
-
 void controller() {
   double channel[4];
   channel[0] = pulseIn(12, HIGH);
@@ -228,7 +199,7 @@ void controller() {
   }
 
   if (channel[2] > 10) {
-    if (channel[2] > 1500) {
+    if (channel[2] > 1450) {
       ch10 = true;
     }else{
       ch10 = false;
@@ -236,6 +207,9 @@ void controller() {
     if (channel[2] < 900) {
       ch10 = false;
     }
+  }
+  if (ch12 != 0) {
+    ch10 = true;
   }
 
   
@@ -251,31 +225,31 @@ void controller() {
     ch9 = 0;
   }
 
-  //Serial.print("ch12: ");
-  //Serial.print(ch12);
-  //Serial.print(" - ");
-  //Serial.println(channel[0]);
+//  Serial.print("ch12: ");
+//  Serial.print(ch12);
+ // Serial.print(" - ");
+ // Serial.println(channel[0]);
   
   //Serial.print("ch11: ");
   //Serial.print(ch11);
   //Serial.print(" - ");
   //Serial.println(channel[1]);
-  
-  //Serial.print("ch10: ");
-  //Serial.print(ch10);
-  //Serial.print(" - ");
-  //Serial.println(channel[2]);
+
+ // Serial.print("ch10: ");
+ // Serial.print(ch10);
+ // Serial.print(" - ");
+ // Serial.println(channel[2]);
   
   //Serial.print("ch9: ");
   //Serial.print(ch9);
   //Serial.print(" - ");
   //Serial.println(channel[3]);
 
- // Serial.print(ch10);
- // Serial.print(' ');
- // Serial.print(ch11);
- // Serial.print(' ');
- // Serial.print(ch12);
- // Serial.print(' ');
- // Serial.println(ch9);
+  //Serial.print(ch10);
+  //Serial.print(' ');
+  //Serial.print(ch11);
+  //Serial.print(' ');
+  //Serial.print(ch12);
+  //Serial.print(' ');
+  //Serial.println(ch9);
 }
