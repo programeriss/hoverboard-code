@@ -81,7 +81,7 @@ void loop() {
     if (ch11 == 0) {
       goBlade(0, 170);
     }else{
-      int blade_speed = ch11 * 20;
+      int blade_speed = ch11 * 10; //20
       goBlade(blade_speed, 85);
     }
     
